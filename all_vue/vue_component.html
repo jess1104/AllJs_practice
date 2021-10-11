@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Boolean可以直接給屬性名稱預設就是true -->
+      <!-- <basic-component basic-name="555" is-active></basic-component> -->
+      <!-- 用物件去綁定，簡化 -->
+      <basic-component v-bind="basicBind"></basic-component>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+
+    <script>
+      const BasicComponent = {
+        template: `<div>{{ basicName }}</div>`,
+        // props: ["basicName"],
+        props: {
+          basicName: String,
+          //當有-記得要分號
+          "is-active": Boolean,
+          "inside-object": Object,
+        },
+      };
+      Vue.component("basic-component", BasicComponent);
+
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            name: "Jess",
+            obj: {
+              count: 0,
+            },
+          };
+        },
+        computed: {
+          //做成一個computed再去給component綁定
+          basicBind() {
+            return {
+              "basic-name": this.name,
+              "is-active": true,
+              "inside-object": this.obj,
+            };
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

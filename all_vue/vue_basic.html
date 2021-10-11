@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #app {
+        padding: 1rem;
+        display: block;
+        flex-direction: column;
+      }
+      h4 {
+        margin-bottom: 1rem;
+      }
+
+      button {
+        margin-right: 1em;
+      }
+      .wrap1 {
+        display: block;
+        overflow: hidden;
+        margin-top: 1rem;
+      }
+      .wrap1 > div {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button v-on:click="plus(amount,$event)">Plus</button>
+      <h4>count: {{ count }}</h4>
+      <button @click="count++">Plus</button>
+      <button @click="count = 0">Reset</button>
+
+      <div class="wrap1">
+        <div v-if="count === 0" style="background-color: #f00">Block A</div>
+        <div v-else-if="count < 5" style="background-color: green">Block B</div>
+        <div v-else style="background-color: #00f">Block C</div>
+      </div>
+      <!-- v-if,v-show -->
+      <label>
+        <input type="checkbox" v-model="isShow" /> isShow: {{ isShow }}
+      </label>
+
+      <div class="wrap">
+        <!-- v-if直接移除元素 -->
+        <div v-if="isShow">V-if</div>
+        <!-- v-show是改變CSS(display:none) -->
+        <div v-show="isShow">V-show</div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            amount: 0,
+            count: 0,
+            // v-if,v-show
+            isShow: true,
+          };
+        },
+        methods: {
+          plus(amount, event) {
+            console.log(event.target.tagName);
+            this.count += amount;
+            // console.log(amount);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

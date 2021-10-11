@@ -67,4 +67,33 @@ btnScrollTo.addEventListener('click', function (e) {
 ///////////////////////////////////////
 // page navigation(nav bar)
 
-document.querySelectorAll('.nav__link');
+// (方法1)上面的LINK(Features,Operations,Testimonials)並且跳到對應的位置
+// document.querySelectorAll('.nav__link').forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     // 不要用預設效果指定到對應位置
+//     e.preventDefault();
+//     // 抓到這個的Href
+//     const id = this.getAttribute('href');
+//     console.log(id);
+//     // 做滾動致那個section的動作
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+// (方法2)上面的LINK(Features,Operations,Testimonials)並且跳到對應的位置
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    console.log(id);
+    // 做滾動致那個section的動作
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+const h1 = document.querySelector('h1');
+
+console.log(h1.childNodes);
+console.log(h1.children);
