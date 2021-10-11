@@ -97,3 +97,113 @@ const h1 = document.querySelector('h1');
 
 console.log(h1.childNodes);
 console.log(h1.children);
+
+document.querySelectorAll('.nav__link');
+
+// lazy loading
+// 抓到只有data-src的img
+const imgTargets = document.querySelectorAll('img[data-src]');
+// console.log(imgTargets);
+
+const loadImg = function (entires, obserrver) {
+  const [entry] = entires;
+  // console.log(entry);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
+// Slider 輪播
+// 先抓到所有的圖
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+// 抓到點點的容器
+const dotContainer = document.querySelector('.dots');
+// const slider = document.querySelector('.slider');
+// slider.style.transform = 'scale(0.3)';
+// slider.style.overflow = 'visible';
+
+// 這個是要與當下的index去作用
+let curSlide = 0;
+// 當點到底就不能再繼續translate
+const maxSlide = slides.length;
+
+// 創建點點
+const createDots = function () {
+  slides.forEach(function (s, i) {
+    // 創建點點
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+createDots();
+
+// 指定黑點顯示
+const activateDot = function (slide) {
+  // 移除所有active
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+activateDot(0);
+
+// 切換功能
+const goToSlide = function (slide) {
+  // 所有slides相連
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  ); // 0%,100%,200%,300%
+};
+goToSlide(0);
+
+// 點擊下一張功能
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    return;
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+  goToSlide(curSlide);
+  activateDot(curSlide);
+};
+// 點擊上一張功能
+const preslide = function () {
+  if (curSlide === 0) {
+    return;
+    // curSide = maxSlide - 1;
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide);
+  activateDot(curSlide);
+};
+
+// 點擊事件
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', preslide);
+// keydown事件
+document.addEventListener('keydown', function (e) {
+  // console.log(e);
+  e.key === 'ArrowLeft' && preslide();
+  e.key === 'ArrowRight' && nextSlide();
+});
+
+// 點擊點點切換至對應圖片
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    const slide = e.target.dataset.slide;
+    goToSlide(slide);
+    activateDot(slide);
+  }
+});
