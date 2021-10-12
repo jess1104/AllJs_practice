@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <style>
+      ul {
+        list-style: none;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{firstName}} Todo's</h1>
+      <input type="text" />
+      <ul>
+        <li v-for="todo in todos">
+          <input type="checkbox" name="work" :id="todo.text" />
+          <label :for="todo.text">{{todo.text}}</label>
+        </li>
+      </ul>
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            firstName: "Jess",
+            todos: [{ text: "Learn JavaScript" }, { text: "Learn Vue" }, { text: "Build something awesome" }],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>
