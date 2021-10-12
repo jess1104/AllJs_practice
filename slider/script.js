@@ -17,13 +17,13 @@ const maxSlide = slides.length;
 // 創建點點
 const createDots = function () {
   slides.forEach(function (s, i) {
-    // 創建點點
+    // 創建點點insertAdjacentHTML
     dotContainer.insertAdjacentHTML("beforeend", `<button class="dots__dot" data-slide="${i}"></button>`);
   });
 };
 createDots();
 
-// 指定黑點顯示
+// 指定白點點顯示
 const activateDot = function (slide) {
   // 移除所有active
   document.querySelectorAll(".dots__dot").forEach((dot) => dot.classList.remove("dots__dot--active"));
@@ -69,6 +69,8 @@ btnLeft.addEventListener("click", preslide);
 // keydown事件
 document.addEventListener("keydown", function (e) {
   // console.log(e);
+  // if (e.key === "ArrowRight") nextSlide();
+  // 簡化
   e.key === "ArrowRight" && nextSlide();
   e.key === "ArrowLeft" && preslide();
 });
@@ -76,6 +78,8 @@ document.addEventListener("keydown", function (e) {
 // 點擊點點切換至對應圖片
 dotContainer.addEventListener("click", function (e) {
   if (e.target.classList.contains("dots__dot")) {
+    // 讓我的slide ＝ 點點相對應的數字
+    console.log(e.target.dataset);
     const slide = e.target.dataset.slide;
     goToSlide(slide);
     activateDot(slide);
