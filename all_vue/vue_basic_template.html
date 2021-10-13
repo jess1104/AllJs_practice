@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+    <style>
+      #app {
+        padding: 20px;
+        display: block;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      li {
+        margin-top: 16px;
+        cursor: pointer;
+      }
+      .box,
+      .show {
+        width: 50px;
+        height: 50px;
+        background-color: #aaa;
+        color: #fff;
+        margin-top: 5px;
+        text-align: center;
+        line-height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h2>模板語法</h2>
+      <p>原本：{{name}}</p>
+      <p>反轉：{{ name.split('').reverse().join('') }}</p>
+      <p>反轉：{{reverseName}}</p>
+      <h2>條件渲染</h2>
+      <div class="box" v-if="type === 'a' ">a</div>
+      <div class="box" v-else-if="type === 'b' ">b</div>
+      <div class="box" v-else="type === 'c' ">c</div>
+      <div class="show" v-show="ok">showA</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          name: "大牛比較懶",
+          type: "a",
+          ok: true,
+        },
+        computed: {
+          reverseName: function () {
+            return this.name.split("").reverse().join("");
+          },
+        },
+      });
+      // vm.$mount("#app");
+      // vm.$data.name = "Jered";
+    </script>
+  </body>
+</html>

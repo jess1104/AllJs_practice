@@ -7,76 +7,107 @@
     <title>Document</title>
     <style>
       #app {
-        padding: 1rem;
+        padding: 20px;
         display: block;
-        flex-direction: column;
       }
-      h4 {
-        margin-bottom: 1rem;
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
       }
-
-      button {
-        margin-right: 1em;
+      li {
+        margin-top: 16px;
+        cursor: pointer;
       }
-      .wrap1 {
-        display: block;
-        overflow: hidden;
-        margin-top: 1rem;
-      }
-      .wrap1 > div {
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        text-align: center;
-        color: #fff;
+      .strikeout {
+        text-decoration: line-through;
+        color: grey;
       }
     </style>
   </head>
   <body>
     <div id="app">
-      <button v-on:click="plus(amount,$event)">Plus</button>
-      <h4>count: {{ count }}</h4>
-      <button @click="count++">Plus</button>
-      <button @click="count = 0">Reset</button>
-
-      <div class="wrap1">
-        <div v-if="count === 0" style="background-color: #f00">Block A</div>
-        <div v-else-if="count < 5" style="background-color: green">Block B</div>
-        <div v-else style="background-color: #00f">Block C</div>
-      </div>
-      <!-- v-if,v-show -->
-      <label>
-        <input type="checkbox" v-model="isShow" /> isShow: {{ isShow }}
-      </label>
-
-      <div class="wrap">
-        <!-- v-if直接移除元素 -->
-        <div v-if="isShow">V-if</div>
-        <!-- v-show是改變CSS(display:none) -->
-        <div v-show="isShow">V-show</div>
-      </div>
+      <h1 v-bind:title="name">{{ name }}</h1>
+      <h2>V-bind</h2>
+      <p>總價: {{ subtotalMethods() }}</p>
+      <ul>
+        <li v-for="item in items" :class="{strikeout:item.isDone}" @click="toggleDone(item)">{{ item.text }}</li>
+      </ul>
+      <h2>V-model</h2>
+      <h3>#Checkbox Boolean</h3>
+      <input type="checkbox" id="checkbox" v-model="checked" />
+      <label for="checkbox">狀態:{{ checked }}</label>
+      <h3>#Checkbox bond to same Array</h3>
+      <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+      <label for="jack">Jack</label>
+      <input type="checkbox" id="john" value="John" v-model="checkedNames" />
+      <label for="john">John</label>
+      <input type="checkbox" id="mike" value="Mike" v-model="checkedNames" />
+      <label for="mike">Mike</label>
+      <br />
+      <span>Checked names: {{ checkedNames }}</span>
+      <h3>#Radio</h3>
+      <input type="radio" id="one" value="One" v-model="picked" />
+      <label for="one">One</label>
+      <br />
+      <input type="radio" id="two" value="Two" v-model="picked" />
+      <label for="two">Two</label>
+      <br />
+      <span>Picked: {{ picked }}</span>
+      <h3>#Select</h3>
+      <select v-model="selected">
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <span>Selected: {{ selected }}</span>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
 
     <script>
-      new Vue({
+      const vm = new Vue({
         el: "#app",
-        data() {
-          return {
-            amount: 0,
-            count: 0,
-            // v-if,v-show
-            isShow: true,
-          };
+        data: {
+          selected: "",
+          picked: "One",
+          checked: false,
+          checkedNames: [],
+          name: "Jess",
+          items: [
+            {
+              text: "learn javascript",
+              isDone: true,
+            },
+            {
+              text: "learn Vue",
+              isDone: false,
+            },
+            {
+              text: "learn css",
+              isDone: true,
+            },
+          ],
+        },
+        computed: {
+          subtotalComputed: function () {
+            console.log("computed");
+            return 100 * 50;
+          },
         },
         methods: {
-          plus(amount, event) {
-            console.log(event.target.tagName);
-            this.count += amount;
-            // console.log(amount);
+          subtotalMethods: function () {
+            console.log("methods");
+            return 100 * 50;
+          },
+          toggleDone: function (item) {
+            item.isDone = !item.isDone;
           },
         },
       });
+      // vm.$mount("#app");
+      // vm.$data.name = "Jered";
     </script>
   </body>
 </html>
