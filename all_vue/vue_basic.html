@@ -31,7 +31,9 @@
       <h2>V-bind</h2>
       <p>總價: {{ subtotalMethods() }}</p>
       <ul>
-        <li v-for="item in items" :class="{strikeout:item.isDone}" @click="toggleDone(item)">{{ item.text }}</li>
+        <li v-for="(item,index) in items" :class="{strikeout:item.isDone}" @click="toggleDone(item)">
+          {{ index+1 }}:{{ item.text }}
+        </li>
       </ul>
       <h2>V-model</h2>
       <h3>#Checkbox Boolean</h3>
@@ -62,8 +64,13 @@
         <option>C</option>
       </select>
       <span>Selected: {{ selected }}</span>
+      <p>v-for雙重迴圈</p>
+      <ul v-for="set in sets">
+        <li v-for="n in even(set)">{{set}},{{ n }}</li>
+      </ul>
+      <p>v-for:</p>
+      <span v-for="n in evenNumbers">{{ n }},</span>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
 
     <script>
@@ -89,20 +96,37 @@
               isDone: true,
             },
           ],
+          numbers: [1, 2, 3, 4, 5],
+          evens: [],
+          sets: [
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+          ],
         },
         computed: {
           subtotalComputed: function () {
             console.log("computed");
             return 100 * 50;
           },
+          evenNumbers: function () {
+            return this.numbers.filter(function (number) {
+              return number % 2 === 0;
+            });
+          },
         },
         methods: {
           subtotalMethods: function () {
-            console.log("methods");
+            // console.log("methods");
             return 100 * 50;
           },
           toggleDone: function (item) {
             item.isDone = !item.isDone;
+            console.log(typeof item.isDone, item.isDone);
+          },
+          even: function (numbers) {
+            return numbers.filter(function (number) {
+              return number % 2 === 0;
+            });
           },
         },
       });

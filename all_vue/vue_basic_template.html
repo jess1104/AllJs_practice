@@ -34,14 +34,24 @@
   <body>
     <div id="app">
       <h2>模板語法</h2>
-      <p>原本：{{name}}</p>
-      <p>反轉：{{ name.split('').reverse().join('') }}</p>
-      <p>反轉：{{reverseName}}</p>
+      <p>原本：{{ greetion }}</p>
+      <p>反轉：{{ greetion.split('').reverse().join('') }}</p>
+      <p>反轉：{{ reverseGreet }}</p>
+
+      <h2>watch監聽 v.s computed計算</h2>
+      <div id="demo">{{ fullName }}</div>
+
       <h2>條件渲染</h2>
+      <p>v-if</p>
       <div class="box" v-if="type === 'a' ">a</div>
       <div class="box" v-else-if="type === 'b' ">b</div>
       <div class="box" v-else="type === 'c' ">c</div>
+      <p>v-show</p>
       <div class="show" v-show="ok">showA</div>
+
+      <h2>事件處理</h2>
+      <!-- $event 事件變量 -->
+      <button @click="greet('vue',$event)">點擊greet</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
@@ -50,13 +60,30 @@
       const vm = new Vue({
         el: "#app",
         data: {
-          name: "大牛比較懶",
+          greetion: "你好呀",
           type: "a",
           ok: true,
+          firstName: "Jess",
+          lastName: "Wu",
+          fullName: "Jess Wu",
+        },
+        methods: {
+          greet: function (str, e) {
+            alert(`Hi~${str}`);
+            console.log(e);
+          },
+        },
+        watch: {
+          firstName: function (val) {
+            this.fullName = val + " " + this.lastName;
+          },
+          lastName: function (val) {
+            this.fullName = this.firstName + " " + val;
+          },
         },
         computed: {
-          reverseName: function () {
-            return this.name.split("").reverse().join("");
+          reverseGreet: function () {
+            return this.greetion.split("").reverse().join("");
           },
         },
       });
