@@ -16,24 +16,13 @@
       <!-- 在 HTML 裡不可使用 <BasicPascal> 
               必需轉為連字號標籤(kebab-case) -->
       <basic-kebab :title="titleName"></basic-kebab>
-      <basic-pascal></basic-pascal>
-      <media-block></media-block>
+
+      <basic-pascal>{{ msg }}</basic-pascal>
+
+      <media-block :child.sync="parentText"></media-block>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
 
-    <script type="text/x-template" id="media-block">
-      <div class="media">
-        <div class="media-body">
-          <h3>Media heading</h3>
-          <div>
-            <p>
-              Cras sit amet nibh libero,
-              in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-            </p>
-          </div>
-        </div>
-      </div>
-    </script>
     <script>
       Vue.component("basic-kebab", {
         template: `
@@ -45,16 +34,23 @@
         props: ["title"],
       });
       Vue.component("BasicPascal", {
-        template: `<h2>基礎元件PascaleCase命名</h2>`,
+        template: `<h2>基礎元件PascaleCase命名<div><slot></slot></div></h2>`,
       });
       Vue.component("media-block", {
-        template: "#media-block",
+        template: `
+        <div>
+            <input type="text" v-model="child">
+            <p>我打的:{{ child }}</p>
+        </div>`,
+        props: ["child"],
       });
 
       new Vue({
         el: "#app",
         data: {
           titleName: "元件Props",
+          msg: "slot msg",
+          parentText: "aaa",
         },
       });
     </script>

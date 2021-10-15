@@ -14,25 +14,52 @@
   </head>
   <body>
     <div id="app">
-      <h1>{{firstName}} Todo's</h1>
-      <input type="text" />
+      <input type="text" v-model="work" @keyup.enter="handleSumit"/>
+      <button @click="handleSumit" >加入要做的清單</button>
+      <span>{{ work }}</span>
       <ul>
-        <li v-for="todo in todos">
-          <input type="checkbox" name="work" :id="todo.text" />
-          <label :for="todo.text">{{todo.text}}</label>
-        </li>
+        <li is="todo-item" v-for="(item,index) of list" :key="index" :content="item" @delete="deleteHandler"></todo-item>
       </ul>
     </div>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+
     <script>
+      Vue.component("todo-item", {
+        props: ["content"],
+        template: `<li>{{content.todo}}<button @click="deleteItem">刪除</button></li>`,
+        methods:{
+          deleteItem(){
+            console.log(this.content);
+            this.$emit('delete',this.content)
+          }
+        }
+      });
       const app = new Vue({
         el: "#app",
         data() {
           return {
-            firstName: "Jess",
-            todos: [{ text: "Learn JavaScript" }, { text: "Learn Vue" }, { text: "Build something awesome" }],
+            work: "",
+            id:null,
+            list: [{todo:"eat",id:0}],
           };
+        },
+        methods: {
+          handleSumit: function () {
+            let id = Date.now()
+            this.list.push({todo:this.work,id:id});
+            this.work = "";
+          },
+          deleteHandler:function(con){
+            console.log(con)
+            this.list.forEach((item,index)=>{
+              if(item.id == con.id){
+                console.log(item,index)
+                this.list.splice(index,1)
+              }
+            })
+            // this.list.splice(index,1)
+          }
         },
       });
     </script>
