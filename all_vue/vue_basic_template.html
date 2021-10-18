@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Template</title>
+
     <style>
       #app {
         padding: 20px;
@@ -42,6 +43,14 @@
       <div id="demo">{{ fullName }}</div>
 
       <h2>條件渲染</h2>
+      <!-- 搭配select/option v-model -->
+      <select v-model="type">
+        <option disabled value="">Please select one</option>
+        <option>a</option>
+        <option>b</option>
+        <option>C</option>
+      </select>
+
       <p>v-if</p>
       <div class="box" v-if="type === 'a' ">a</div>
       <div class="box" v-else-if="type === 'b' ">b</div>

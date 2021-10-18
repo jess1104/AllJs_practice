@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Router</title>
+
+    <style>
+      .router-link-exact-active {
+        background-color: lightsalmon;
+        color: blueviolet;
+      }
+      .page {
+        border: 5px solid red;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100px;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- a tag 的概念，但有class active效果 -->
+      <p>
+        <router-link to="/">Index</router-link>
+        <router-link to="/Page1">Page1</router-link>
+        <router-link to="/posts">Posts</router-link>
+        <router-link to="/user">User</router-link>
+        <router-link to="/user/profile">User Profile</router-link>
+        <router-link to="/user/posts">User Posts</router-link>
+      </p>
+      <router-view></router-view>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.4.3/vue-router.js"
+      integrity="sha512-3y+1622sE9JcYGIob4bKvJI6qMHpzrsloehokHVZBk1Lx7lr7H5p6IOqIkRQzB0Ids5l11W3n+vK50xArypH5g=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // router控制他
+      // route網址對到畫面
+      const Index = { template: "<div class='page'>Index</div>" };
+      const Page1 = { template: "<div class='page'>Page1</div>" };
+      const User = {
+        template: `
+                <div class='page'>
+                    User
+                    <router-view></router-view>
+                </div>
+            `,
+        mounted() {
+          console.log("User");
+          // Posts -> User (componet是從內層一路 mounted 到外層)
+        },
+      };
+      const Profile = { template: "<div class='page'>Profile</div>" };
+      const Posts = { template: "<div class='page'>Posts</div>" };
+
+      // 定義router
+      const router = new VueRouter({
+        routes: [
+          {
+            path: "/",
+            component: Index,
+          },
+          {
+            path: "/page1",
+            component: Page1,
+          },
+          {
+            path: "/user",
+            component: User,
+            children: [
+              // 加上斜線
+              {
+                path: "profile",
+                component: Profile,
+              },
+              {
+                path: "posts",
+                component: Posts,
+              },
+            ],
+          },
+          {
+            path: "*",
+            component: Error,
+          },
+        ],
+      });
+
+      new Vue({
+        el: "#app",
+        router,
+      });
+    </script>
+  </body>
+</html>
