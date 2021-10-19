@@ -30,7 +30,6 @@
       <p>
         <router-link to="/">Index</router-link>
         <router-link to="/Page1">Page1</router-link>
-        <router-link to="/posts">Posts</router-link>
         <router-link to="/user">User</router-link>
         <router-link to="/user/profile">User Profile</router-link>
         <router-link to="/user/posts">User Posts</router-link>
@@ -56,10 +55,6 @@
                     <router-view></router-view>
                 </div>
             `,
-        mounted() {
-          console.log("User");
-          // Posts -> User (componet是從內層一路 mounted 到外層)
-        },
       };
       const Profile = { template: "<div class='page'>Profile</div>" };
       const Posts = { template: "<div class='page'>Posts</div>" };
@@ -79,7 +74,6 @@
             path: "/user",
             component: User,
             children: [
-              // 加上斜線
               {
                 path: "profile",
                 component: Profile,

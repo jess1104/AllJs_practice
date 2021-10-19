@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Named Views</title>
+
+    <style>
+      .router-link-exact-active {
+        background-color: lightsalmon;
+        color: blueviolet;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Named Views</h1>
+      <ul>
+        <li>
+          <router-link :to="{name:'foo'}">/</router-link>
+        </li>
+        <li>
+          <router-link :to="{name:'other'}">/other</router-link>
+        </li>
+      </ul>
+      <router-view class="view one"></router-view>
+      <router-view class="view two" name="a"></router-view>
+      <router-view class="view three" name="b"></router-view>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.4.3/vue-router.js"
+      integrity="sha512-3y+1622sE9JcYGIob4bKvJI6qMHpzrsloehokHVZBk1Lx7lr7H5p6IOqIkRQzB0Ids5l11W3n+vK50xArypH5g=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const Foo = { template: "<div>foo</div>" };
+      const Bar = { template: "<div>bar</div>" };
+      const Baz = { template: "<div>baz</div>" };
+
+      const router = new VueRouter({
+        // mode: "history",
+        routes: [
+          {
+            path: "/",
+            name: "foo",
+            components: {
+              default: Foo,
+              a: Bar,
+              b: Baz,
+            },
+          },
+          {
+            path: "/other",
+            name: "other",
+            components: {
+              default: Foo,
+              a: Bar,
+            },
+          },
+        ],
+      });
+
+      new Vue({
+        router,
+        el: "#app",
+      });
+    </script>
+  </body>
+</html>
