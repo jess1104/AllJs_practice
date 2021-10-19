@@ -6,9 +6,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    todos: [],
+    todos: [1, 2, 3],
   },
   mutations: {
+    // 更動state的值所以後面那個參數value就是新的值
     setTodos(state, value) {
       state.todos = value;
     },
