@@ -6,37 +6,42 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // state 裡面的 Loaded 預設為 false ，在 axios 成功 get 到 user api 的之後，再更改為 true
-    Loaded: false,
+    count: 0,
+    myName: "Jess",
+    todos: [1, 2, 3],
   },
-  actions: {
-    GetUser(context) {
-      axios
-        .get("https://randomuser.me/api/")
-        .then(function(response) {
-          console.log(response);
-          console.log(context);
-          // 在 actions 裡面，可以用 context.commit 來呼叫 mutations，
-          // 也可以用 context.dispatch 來呼叫另外一個 actions。
-          context.commit("MyMutations");
-          context.dispatch("AnotherActions");
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+  getters: {
+    newName: (state) => {
+      return state.myName + " Wu";
     },
-    AnotherActions() {
-      console.log("Another Actions run!");
+    nickName: (state) => {
+      return state.myName + " Watson";
+    },
+    anotherName: (state, getters) => {
+      return getters.nickName;
     },
   },
   mutations: {
-    MyMutations(state) {
-      console.log("MyMutations run!");
-      // 抓到user之後，將state的loaded改為true
-      state.Loaded = true;
+    increment(state, payload) {
+      console.log(payload);
+      state.count += payload.amount;
     },
-    SetFalse(state) {
-      state.Loaded = false;
+    decrement(state) {
+      state.count--;
+    },
+    // 更動state的值所以後面那個參數value就是新的值
+    setTodos(state, value) {
+      state.todos = value;
     },
   },
+  actions: {
+    loadTodos(context) {
+      // 假文章api
+      axios.get("https://jsonplaceholder.typicode.com/todos").then((res) => {
+        // console.log(res.data);
+        context.commit("setTodos", res.data);
+      });
+    },
+  },
+  modules: {},
 });

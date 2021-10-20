@@ -7,10 +7,14 @@
       <button @click="increment({ amount: 10, name: 'Jess' })">+</button>
       <button @click="decrement">-</button>
     </p>
-    <h2>{{ $store.state.todos }}</h2>
-    <h3 v-for="todo in todos" :key="todo">{{ todo }}</h3>
+    <!-- <h2>{{ $store.state.todos }}</h2> -->
+    <!-- <h3 v-for="(todo, index) in todos" :key="index">{{ todo }}</h3> -->
+    <h3 v-for="(todo, i) in userTodos" :key="i">
+      {{ todo.userId }}:{{ todo.title }}
+    </h3>
     <button @click="setTodos(['amy', 'jess', 'tom'])">增加todos</button>
-    <button @click="setTodos()">更新todos</button>
+    <button @click="loadTodos">更新todos</button>
+    <button @click="userTodos()">點擊查看use2</button>
   </div>
 </template>
 
@@ -34,9 +38,13 @@ export default {
     // },
     // 使用mapStata 就可直接使用todos取代$store.state.todos
     ...mapState(["todos", "count"]),
+    userTodos() {
+      console.log(this.todos.filter((todo, i) => todo.userId == 2));
+      return this.todos.filter((todo, i) => todo.userId == 2);
+    },
   },
   mounted() {
-    this.setTodos(["a", "b", "c"]);
+    this.loadTodos();
   },
   methods: {
     decrement() {
