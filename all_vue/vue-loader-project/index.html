@@ -4,6 +4,8 @@
     <title>Hello World</title>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="/path/to/vue.js"></script>
+    <script src="/path/to/vuex.js"></script>
   </head>
 
   <body>
@@ -12,6 +14,7 @@
     <div id="app">
       <span>Hello</span>
       <app-world></app-world>
+      <hello-world></hello-world>
     </div>
 
     <script>
@@ -20,6 +23,7 @@
 
         components: {
           "app-world": window.httpVueLoader("./js/components/AppWorld.vue"),
+          "hello-world": window.httpVueLoader("./js/components/HelloWorld.vue"),
         },
       });
     </script>

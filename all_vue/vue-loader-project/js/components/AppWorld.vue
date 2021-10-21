@@ -4,6 +4,11 @@
 
 <script>
 module.exports = {
+  data() {
+    return {
+      name: "Jess",
+    };
+  },
   mounted() {
     console.log("Hello World");
   },

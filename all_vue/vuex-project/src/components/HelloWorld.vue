@@ -8,16 +8,12 @@
       <button @click="decrement">-</button>
     </p>
     <!-- <h2>{{ $store.state.todos }}</h2> -->
-    <!-- <h3 v-for="(todo, index) in todos" :key="index">{{ todo }}</h3> -->
-    <h3 v-for="(todo, i) in userTodos" :key="i">
-      {{ todo.userId }}:{{ todo.title }}
-    </h3>
+    <h3 v-for="(todo, index) in todos" :key="index">{{ todo }}</h3>
     <button @click="setTodos(['amy', 'jess', 'tom'])">增加todos</button>
     <button @click="loadTodos">更新todos</button>
     <button @click="userTodos()">點擊查看use2</button>
   </div>
 </template>
-
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {

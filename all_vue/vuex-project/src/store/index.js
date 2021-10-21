@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     count: 0,
     myName: "Jess",
-    todos: [1, 2, 3],
+    todos: [],
+    isShow: false,
   },
   getters: {
     newName: (state) => {
