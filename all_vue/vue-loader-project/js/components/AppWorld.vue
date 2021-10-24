@@ -6,6 +6,7 @@
 module.exports = {
   data() {
     return {
+      last: "Wu",
       name: "Jess",
     };
   },
