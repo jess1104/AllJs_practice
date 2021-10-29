@@ -8,4 +8,4 @@ function stars(n) {
   }
 }
 
-stars(4);
+// stars(4);
