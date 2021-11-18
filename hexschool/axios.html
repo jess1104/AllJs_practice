@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>axios</title>
+    </head>
+    <body>
+        <h1 class="title"></h1>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            axios
+                .get('https://hexschool.github.io/ajaxHomework/data.json')
+                .then(function (response) {
+                    // console.log(response.data);
+                    // console.log(response.status);
+                    // console.log(response.statusText);
+                    // console.log(response.headers);
+                    // console.log(response.config);
+                    const arr = response.data;
+                    const title = document.querySelector('.title');
+                    title.textContent = arr[0].name;
+                });
+        </script>
+    </body>
+</html>

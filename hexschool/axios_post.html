@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>axiospost</title>
+    </head>
+    <body>
+        <h1>註冊</h1>
+        帳號:<input type="text" class="account" /> 密碼:
+        <input type="text" class="password" />
+        <input type="button" class="send" value="註冊" />
+        <h1>註冊</h1>
+        帳號:<input type="text" class="signInAccount" /> 密碼:
+        <input type="text" class="signInPassword" />
+        <input type="button" class="signInSend" value="登入" />
+
+        <!-- 資料傳送給對方ＰＯＳＴ -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            const account = document.querySelector('.account');
+            const password = document.querySelector('.password');
+            const send = document.querySelector('.send');
+            const signInAccount = document.querySelector('.signInAccount');
+            const signInPassword = document.querySelector('.signInPassword');
+            const signInSend = document.querySelector('.signInSend');
+
+            send.addEventListener('click', function (e) {
+                // console.log(e.target.value);
+                callSignUp();
+            });
+            signInSend.addEventListener('click', function () {
+                callSignIn();
+            });
+            function callSignUp() {
+                // 註冊api: https://hexschool-tutorial.herokuapp.com/api/signup
+                let obj = {
+                    // 上面拿到的值賦予給key
+                    email: account.value,
+                    password: password.value,
+                };
+
+                axios
+                    // post('url網址',要傳給伺服器的json檔).then(res=>console.log(res)//伺服器收到資料後回傳的資料)
+                    .post(
+                        'https://hexschool-tutorial.herokuapp.com/api/signup',
+                        obj
+                    )
+                    .then(function (res) {
+                        console.log(res);
+                        if (res.data.message == '帳號註冊成功') {
+                            alert('成功註冊');
+                        } else {
+                            alert('此帳密已註冊');
+                        }
+                        account.value = '';
+                        password.value = '';
+                    })
+                    .catch(function (res) {
+                        console.log(res);
+                    });
+            }
+            function callSignIn() {
+                let signInObj = {
+                    email: signInAccount.value,
+                    password: signInPassword.value,
+                };
+                axios
+                    .post(
+                        'https://hexschool-tutorial.herokuapp.com/api/signin',
+                        signInObj
+                    )
+                    .then(function (res) {
+                        console.log(res);
+                        if (res.data.message == '登入成功') {
+                            alert('登入成功');
+                        } else {
+                            alert('此帳號不存在或帳號密碼錯誤');
+                        }
+                        signInAccount = '';
+                        signInPassword = '';
+                    });
+            }
+        </script>
+    </body>
+</html>

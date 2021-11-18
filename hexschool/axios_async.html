@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>axios</title>
+    </head>
+    <body>
+        <h1 class="title"></h1>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            let array = [];
+            // 2.當資料收到賦予此array空陣列值
+            axios
+                .get('https://hexschool.github.io/ajaxHomework/data.json')
+                .then(function (response) {
+                    // console.log(response.data);
+                    // console.log(response.status);
+                    // console.log(response.statusText);
+                    // console.log(response.headers);
+                    // console.log(response.config);
+                    array = response.data;
+                    // 3.再去執行這個funtion
+                    render();
+                });
+
+            function render() {
+                console.log(array);
+                const title = document.querySelector('.title');
+                title.textContent = array[0].name;
+            }
+            // 1.因為非同步所以會先跑下面這行
+            console.log(array);
+        </script>
+    </body>
+</html>
